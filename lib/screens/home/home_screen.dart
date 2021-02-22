@@ -47,6 +47,7 @@ class HomeScreen extends StatelessWidget {
 
     return Scaffold(
         backgroundColor: Colors.deepPurple[600],
+        resizeToAvoidBottomPadding: false,
         body: Stack(
           alignment: Alignment.center,
           children: [
@@ -69,6 +70,30 @@ class HomeScreen extends StatelessWidget {
               top: 40,
               left: 20,
             ),
+            Positioned(
+              child: Text(
+                "Adicione, remova e conclua tarefas e organize-se!",
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400),
+              ),
+              top: 100,
+              left: 20,
+            ),
+            Observer(builder: (_) {
+              return Positioned(
+                child: Text(
+                  "${homeStore.listItems.length}",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w400),
+                ),
+                top: 55,
+                right: 20,
+              );
+            }),
             DraggableScrollableSheet(
               maxChildSize: 0.80,
               minChildSize: 0.1,

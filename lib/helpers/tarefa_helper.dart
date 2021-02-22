@@ -36,7 +36,8 @@ class TarefaHelper {
 
   Future<Tarefa> saveTarefa(Tarefa tarefa) async {
     Database dbTarefa = await db;
-    tarefa.id = await dbTarefa.insert(tarefaTable, tarefa.toMap(), conflictAlgorithm: ConflictAlgorithm.replace);
+    tarefa.id = await dbTarefa.insert(tarefaTable, tarefa.toMap(),
+        conflictAlgorithm: ConflictAlgorithm.replace);
     return tarefa;
   }
 
@@ -66,14 +67,12 @@ class TarefaHelper {
         where: "$idColumn = ?", whereArgs: [tarefa.id]);
   }
 
-  Future<List> getAll() async {
+  Future<List<Tarefa>> getAll() async {
     Database dbTarefa = await db;
     List listMap = await dbTarefa.query(tarefaTable);
-    List<Tarefa> listTarefa = List();
-
-    for (Map m in listMap) {
-      listTarefa.add(Tarefa.fromMap(m));
-    }
+    List<Tarefa> listTarefa = listMap.isNotEmpty
+        ? listMap.map((e) => Tarefa.fromMap(e)).toList()
+        : [];
 
     return listTarefa;
   }

@@ -10,14 +10,7 @@ abstract class _HomeStoreBase with Store {
   TarefaHelper tarefaHelper = TarefaHelper();
 
   _HomeStoreBase() {
-    tarefaHelper.getAll().then((listaTarefas) {
-      for (Tarefa tarefa in listaTarefas) {
-        listItems.add(ItemStore(
-            id: tarefa.id,
-            name: tarefa.name,
-            check: tarefa.check == 1 ? true : false));
-      }
-    });
+    loadItems();
   }
 
   @action
@@ -29,7 +22,7 @@ abstract class _HomeStoreBase with Store {
 
     tarefaHelper.saveTarefa(tarefaNova);
 
-    listItems.add(item);
+    loadItems();
   }
 
   @action
@@ -37,5 +30,19 @@ abstract class _HomeStoreBase with Store {
     tarefaHelper.deleteTarefa(item.id);
 
     listItems.remove(item);
+  }
+
+  @action
+  void loadItems() {
+    listItems.clear();
+
+    tarefaHelper.getAll().then((listaTarefas) {
+      for (Tarefa tarefa in listaTarefas) {
+        listItems.add(ItemStore(
+            id: tarefa.id,
+            name: tarefa.name,
+            check: tarefa.check == 1 ? true : false));
+      }
+    });
   }
 }

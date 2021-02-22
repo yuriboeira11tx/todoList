@@ -35,6 +35,17 @@ mixin _$HomeStore on _HomeStoreBase, Store {
   }
 
   @override
+  void loadItems() {
+    final _$actionInfo = _$_HomeStoreBaseActionController.startAction(
+        name: '_HomeStoreBase.loadItems');
+    try {
+      return super.loadItems();
+    } finally {
+      _$_HomeStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 
