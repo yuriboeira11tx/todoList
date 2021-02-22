@@ -1,4 +1,5 @@
 import 'package:mobx/mobx.dart';
+import 'package:todolist/helpers/tarefa_helper.dart';
 import 'package:todolist/stores/item_store/item_store.dart';
 part 'home_store.g.dart';
 
@@ -6,16 +7,35 @@ class HomeStore = _HomeStoreBase with _$HomeStore;
 
 abstract class _HomeStoreBase with Store {
   ObservableList<ItemStore> listItems = ObservableList<ItemStore>();
+  TarefaHelper tarefaHelper = TarefaHelper();
 
   _HomeStoreBase() {
-    listItems.add(ItemStore(name: "Revisar suprimentos na geladeira", check: true));
-    listItems.add(ItemStore(name: "Assistir Harry Potter", check: true));
-    listItems.add(ItemStore(name: "Fazer fricassê de frango no jantar", check: false));
+    tarefaHelper.getAll().then((listaTarefas) {
+      for (Tarefa tarefa in listaTarefas) {
+        listItems.add(ItemStore(
+            id: tarefa.id,
+            name: tarefa.name,
+            check: tarefa.check == 1 ? true : false));
+      }
+    });
   }
 
   @action
-  void addItem(ItemStore item) => listItems.add(item);
+  void addItem(ItemStore item) {
+    Tarefa tarefaNova = Tarefa();
+    tarefaNova.id = item.id;
+    tarefaNova.name = item.name;
+    tarefaNova.check = 0;
+
+    tarefaHelper.saveTarefa(tarefaNova);
+
+    listItems.add(item);
+  }
 
   @action
-  void removeItem(ItemStore item) => listItems.remove(item);
+  void removeItem(ItemStore item) {
+    tarefaHelper.deleteTarefa(item.id);
+
+    listItems.remove(item);
+  }
 }

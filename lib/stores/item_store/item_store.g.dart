@@ -16,6 +16,21 @@ mixin _$ItemStore on _ItemStoreBase, Store {
           Computed<bool>(() => super.isCheck, name: '_ItemStoreBase.isCheck'))
       .value;
 
+  final _$idAtom = Atom(name: '_ItemStoreBase.id');
+
+  @override
+  int get id {
+    _$idAtom.reportRead();
+    return super.id;
+  }
+
+  @override
+  set id(int value) {
+    _$idAtom.reportWrite(value, super.id, () {
+      super.id = value;
+    });
+  }
+
   final _$nameAtom = Atom(name: '_ItemStoreBase.name');
 
   @override
@@ -50,6 +65,17 @@ mixin _$ItemStore on _ItemStoreBase, Store {
       ActionController(name: '_ItemStoreBase');
 
   @override
+  void setId(int value) {
+    final _$actionInfo = _$_ItemStoreBaseActionController.startAction(
+        name: '_ItemStoreBase.setId');
+    try {
+      return super.setId(value);
+    } finally {
+      _$_ItemStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void setName(String value) {
     final _$actionInfo = _$_ItemStoreBaseActionController.startAction(
         name: '_ItemStoreBase.setName');
@@ -74,6 +100,7 @@ mixin _$ItemStore on _ItemStoreBase, Store {
   @override
   String toString() {
     return '''
+id: ${id},
 name: ${name},
 check: ${check},
 isCheck: ${isCheck}

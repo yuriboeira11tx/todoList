@@ -30,6 +30,7 @@ dependencies:
   cupertino_icons: ^1.0.0
   mobx:
   flutter_mobx:
+  sqflite:
 
 dev_dependencies:
   flutter_test:

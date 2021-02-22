@@ -23,6 +23,8 @@ class HomeScreen extends StatelessWidget {
                   border: OutlineInputBorder(),
                   labelText: "Nome da Nova Tarefa",
                 ),
+                textCapitalization: TextCapitalization.words,
+                cursorColor: Colors.deepPurple,
               ),
               actions: [
                 FlatButton(

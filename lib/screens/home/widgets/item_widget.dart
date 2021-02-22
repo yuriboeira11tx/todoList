@@ -26,7 +26,7 @@ class ItemWidget extends StatelessWidget {
           color: item.check ? Colors.greenAccent : Colors.redAccent,
           onPressed: () => item.setCheck(!item.check),
         ),
-        //isThreeLine: true,
+        isThreeLine: true,
       );
     });
   }
