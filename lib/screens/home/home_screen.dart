@@ -3,6 +3,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:todolist/screens/home/widgets/item_widget.dart';
 import 'package:todolist/stores/home_store/home_store.dart';
 import 'package:todolist/stores/item_store/item_store.dart';
+import 'package:intl/intl.dart';
 
 class HomeScreen extends StatelessWidget {
   final HomeStore homeStore = HomeStore();
@@ -35,6 +36,7 @@ class HomeScreen extends StatelessWidget {
                 ),
                 FlatButton(
                   onPressed: () {
+                    itemModel.setDate(DateFormat("dd/MM").format(DateTime.now()));
                     homeStore.addItem(itemModel);
                     Navigator.pop(context);
                   },
@@ -52,8 +54,8 @@ class HomeScreen extends StatelessWidget {
           alignment: Alignment.center,
           children: [
             Container(
-              width: 400,
-              height: 600,
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height * 0.75,
               child: Image.asset(
                 'assets/image.png',
                 fit: BoxFit.cover,
@@ -72,7 +74,7 @@ class HomeScreen extends StatelessWidget {
             ),
             Positioned(
               child: Text(
-                "Adicione, remova e conclua tarefas e organize-se!",
+                "Adicione, remova e conclua suas tarefas!",
                 style: TextStyle(
                     color: Colors.white,
                     fontSize: 14,
@@ -95,7 +97,7 @@ class HomeScreen extends StatelessWidget {
               );
             }),
             DraggableScrollableSheet(
-              maxChildSize: 0.80,
+              maxChildSize: 0.85,
               minChildSize: 0.1,
               builder: (context, scrolController) {
                 return Stack(

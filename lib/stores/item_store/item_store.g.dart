@@ -46,6 +46,21 @@ mixin _$ItemStore on _ItemStoreBase, Store {
     });
   }
 
+  final _$dateAtom = Atom(name: '_ItemStoreBase.date');
+
+  @override
+  String get date {
+    _$dateAtom.reportRead();
+    return super.date;
+  }
+
+  @override
+  set date(String value) {
+    _$dateAtom.reportWrite(value, super.date, () {
+      super.date = value;
+    });
+  }
+
   final _$checkAtom = Atom(name: '_ItemStoreBase.check');
 
   @override
@@ -63,6 +78,17 @@ mixin _$ItemStore on _ItemStoreBase, Store {
 
   final _$_ItemStoreBaseActionController =
       ActionController(name: '_ItemStoreBase');
+
+  @override
+  void setDate(String value) {
+    final _$actionInfo = _$_ItemStoreBaseActionController.startAction(
+        name: '_ItemStoreBase.setDate');
+    try {
+      return super.setDate(value);
+    } finally {
+      _$_ItemStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
 
   @override
   void setId(int value) {
@@ -102,6 +128,7 @@ mixin _$ItemStore on _ItemStoreBase, Store {
     return '''
 id: ${id},
 name: ${name},
+date: ${date},
 check: ${check},
 isCheck: ${isCheck}
     ''';

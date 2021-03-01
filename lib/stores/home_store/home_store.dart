@@ -18,6 +18,7 @@ abstract class _HomeStoreBase with Store {
     Tarefa tarefaNova = Tarefa();
     tarefaNova.id = item.id;
     tarefaNova.name = item.name;
+    tarefaNova.date = item.date;
     tarefaNova.check = 0;
 
     tarefaHelper.saveTarefa(tarefaNova);
@@ -41,6 +42,7 @@ abstract class _HomeStoreBase with Store {
         listItems.add(ItemStore(
             id: tarefa.id,
             name: tarefa.name,
+            date: tarefa.date,
             check: tarefa.check == 1 ? true : false));
       }
     });

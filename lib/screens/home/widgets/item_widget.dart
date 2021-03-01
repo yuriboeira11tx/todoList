@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:todolist/stores/item_store/item_store.dart';
@@ -17,12 +18,12 @@ class ItemWidget extends StatelessWidget {
               TextStyle(color: Colors.grey[900], fontWeight: FontWeight.bold),
         ),
         subtitle: Text(
-          "Item número tal",
+          "${item.date}",
           style: TextStyle(color: Colors.grey[700]),
         ),
         trailing: IconButton(
           icon: Icon(
-              item.check ? Icons.check_circle : Icons.indeterminate_check_box),
+              item.check ? CupertinoIcons.check_mark_circled_solid : CupertinoIcons.clock_solid),
           color: item.check ? Colors.greenAccent : Colors.redAccent,
           onPressed: () => item.setCheck(!item.check),
         ),

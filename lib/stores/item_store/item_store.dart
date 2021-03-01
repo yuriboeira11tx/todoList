@@ -7,7 +7,7 @@ class ItemStore = _ItemStoreBase with _$ItemStore;
 abstract class _ItemStoreBase with Store {
   TarefaHelper tarefaHelper = TarefaHelper();
 
-  _ItemStoreBase({this.id, this.name, this.check = false});
+  _ItemStoreBase({this.id, this.name, this.date, this.check = false});
 
   @observable
   int id;
@@ -16,7 +16,13 @@ abstract class _ItemStoreBase with Store {
   String name;
 
   @observable
+  String date;
+
+  @observable
   bool check = false;
+
+  @action
+  void setDate(String value) => date = value;
 
   @action
   void setId(int value) => id = value;

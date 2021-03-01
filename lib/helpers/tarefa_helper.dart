@@ -5,6 +5,7 @@ final String tarefaTable = "tarefaTable";
 final String idColumn = "idColumn";
 final String nameColumn = "nameColumn";
 final String checkColumn = "checkColumn";
+final String dateColumn = "dateColumn";
 
 class TarefaHelper {
   // criar apenas uma instância da classe
@@ -30,7 +31,7 @@ class TarefaHelper {
     return await openDatabase(path, version: 1,
         onCreate: (Database db, int newerVersion) async {
       await db.execute(
-          "CREATE TABLE $tarefaTable($idColumn INTEGER PRIMARY KEY AUTOINCREMENT, $nameColumn TEXT, $checkColumn INTEGER)");
+          "CREATE TABLE $tarefaTable($idColumn INTEGER PRIMARY KEY AUTOINCREMENT, $nameColumn TEXT, $checkColumn INTEGER, $dateColumn TEXT)");
     });
   }
 
@@ -69,7 +70,7 @@ class TarefaHelper {
 
   Future<List<Tarefa>> getAll() async {
     Database dbTarefa = await db;
-    List listMap = await dbTarefa.query(tarefaTable);
+    List listMap = await dbTarefa.query(tarefaTable, orderBy: "$idColumn DESC");
     List<Tarefa> listTarefa = listMap.isNotEmpty
         ? listMap.map((e) => Tarefa.fromMap(e)).toList()
         : [];
@@ -85,8 +86,9 @@ class TarefaHelper {
 
 class Tarefa {
   int id;
-  String name;
   int check;
+  String name;
+  String date;
 
   Tarefa();
 
@@ -94,12 +96,14 @@ class Tarefa {
     this.id = map[idColumn];
     this.name = map[nameColumn];
     this.check = map[checkColumn];
+    this.date = map[dateColumn];
   }
 
   Map toMap() {
     Map<String, dynamic> map = {
       nameColumn: name,
       checkColumn: check,
+      dateColumn: date,
     };
 
     if (id != null) {
@@ -111,6 +115,6 @@ class Tarefa {
 
   @override
   String toString() {
-    return "Tarefa(id: $id, name: $name, check: $check)";
+    return "Tarefa(id: $id, name: $name, check: $check, date: $date)";
   }
 }
