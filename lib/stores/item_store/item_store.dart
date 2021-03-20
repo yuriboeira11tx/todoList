@@ -37,6 +37,7 @@ abstract class _ItemStoreBase with Store {
     Tarefa tarefa = Tarefa();
     tarefa.id = id;
     tarefa.name = name;
+    tarefa.date = date;
     tarefa.check = check ? 1 : 0;
 
     tarefaHelper.updateTarefa(tarefa);

@@ -26,7 +26,7 @@ class TarefaHelper {
 
   Future<Database> initDb() async {
     final databasePath = await getDatabasesPath();
-    final path = join(databasePath, "tarefas.db");
+    final path = join(databasePath, "todoList.db");
 
     return await openDatabase(path, version: 1,
         onCreate: (Database db, int newerVersion) async {
@@ -45,7 +45,7 @@ class TarefaHelper {
   Future<Tarefa> getTarefa(int id) async {
     Database dbTarefa = await db;
     List<Map> maps = await dbTarefa.query(tarefaTable,
-        columns: [idColumn, nameColumn, checkColumn],
+        columns: [idColumn, nameColumn, checkColumn, dateColumn],
         where: "$idColumn = ?",
         whereArgs: [id]);
 

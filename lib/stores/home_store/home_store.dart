@@ -21,6 +21,8 @@ abstract class _HomeStoreBase with Store {
     tarefaNova.date = item.date;
     tarefaNova.check = 0;
 
+    if (tarefaNova.name == null || tarefaNova.name.isEmpty) tarefaNova.name = "Sem nome";
+
     tarefaHelper.saveTarefa(tarefaNova);
 
     loadItems();
@@ -31,6 +33,17 @@ abstract class _HomeStoreBase with Store {
     tarefaHelper.deleteTarefa(item.id);
 
     listItems.remove(item);
+  }
+
+  @action
+  void updateItem(ItemStore item) {
+    Tarefa tarefa = Tarefa();
+    tarefa.id = item.id;
+    tarefa.name = item.name;
+    tarefa.date = item.date;
+    tarefa.check = item.check ? 1 : 0;
+
+    tarefaHelper.updateTarefa(tarefa);
   }
 
   @action

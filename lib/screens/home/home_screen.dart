@@ -47,6 +47,43 @@ class HomeScreen extends StatelessWidget {
           });
     }
 
+    _dialogUpdate(ItemStore itemStore) {
+      var itemModel = itemStore;
+
+      showDialog(
+          context: context,
+          builder: (_) {
+            return AlertDialog(
+              title: Text("Atualizar Tarefa"),
+              content: TextField(
+                onChanged: itemModel.setName,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: "Novo Nome da Tarefa",
+                ),
+                textCapitalization: TextCapitalization.words,
+                cursorColor: Colors.deepPurple,
+              ),
+              actions: [
+                FlatButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text("Cancelar"),
+                ),
+                FlatButton(
+                  onPressed: () {
+                    itemModel.setDate(DateFormat("dd/MM").format(DateTime.now()));
+                    homeStore.updateItem(itemModel);
+                    Navigator.pop(context);
+                  },
+                  child: Text("Atualizar"),
+                ),
+              ],
+            );
+          });
+    }
+
     return Scaffold(
         backgroundColor: Colors.deepPurple[600],
         resizeToAvoidBottomPadding: false,
@@ -118,7 +155,8 @@ class HomeScreen extends StatelessWidget {
                               itemBuilder: (context, index) {
                                 var item = homeStore.listItems[index];
 
-                                return Dismissible(
+                                return GestureDetector(
+                                  child: Dismissible(
                                     key: ValueKey(item),
                                     child: ItemWidget(
                                       item: item,
@@ -126,7 +164,9 @@ class HomeScreen extends StatelessWidget {
                                     direction: DismissDirection.startToEnd,
                                     onDismissed: (direction) {
                                       homeStore.removeItem(item);
-                                    });
+                                    }),
+                                  onTap: () => _dialogUpdate(item),
+                                );
                               },
                             );
                           },
